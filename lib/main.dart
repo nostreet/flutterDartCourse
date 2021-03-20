@@ -10,14 +10,31 @@ void main() {
 
 // StatelessWidget does the heavy lifting features for us from the
 // material.dart app
-class MyFollowMeApp extends StatelessWidget {
+class MyFollowMeApp extends StatefulWidget {
+  @override
+  _MyFollowMeAppState createState() => _MyFollowMeAppState();
+}
+
+class _MyFollowMeAppState extends State<MyFollowMeApp> {
   var questions = [
     "What's your favorite color?",
     "What's your favorite animal?",
   ];
 
+  var indexQuestions =0;
+
   @override
   Widget build(BuildContext context) {
+
+    void answerQuestion() {
+      // forces flutter to rerender interface
+      // (calls builds again of the  said widget)
+      setState(() {
+        indexQuestions += 1;
+      });
+      print('Answer chosen!');
+    }
+
     // named argument to easier remember which argument goes
     // into what position
     return MaterialApp(
@@ -27,18 +44,18 @@ class MyFollowMeApp extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Text('The questions:'),
+            Text(questions[indexQuestions]),
             RaisedButton(
               child: Text("Answer 1"),
-              onPressed: null,
+              onPressed: answerQuestion,
             ),
             RaisedButton(
               child: Text("Answer 2"),
-              onPressed: null,
+              onPressed: () => print("Answer 2 chosen"),
             ),
             RaisedButton(
               child: Text("Answer 3"),
-              onPressed: null,
+              onPressed: answerQuestion,
             ),
           ],
         ),
